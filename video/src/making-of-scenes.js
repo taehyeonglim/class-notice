@@ -44,11 +44,11 @@ export const changes = [
   {
     title: '교실 뒤에서도 읽히는 글자',
     topic: '글꼴',
-    before: {image: fontBefore, label: '기본 글꼴 · 본문 14px', focus: [0.35, 0.33]},
+    before: {image: fontBefore, label: '기본 글꼴 · 본문 15px', focus: [0.35, 0.33]},
     after: {image: fontAfter, label: 'Pretendard · 본문 20px', focus: [0.35, 0.33]},
     zoom: 1.65,
     prompt: '글꼴을 Pretendard로 바꾸고 본문 글자를 20px로 키워 줘. 교실 뒤에서도 읽혀야 해.',
-    reason: '교실 뒤에 앉은 학생도 알림을 읽을 수 있게 Pretendard를 적용하고 본문을 14px에서 20px로 키웠어요.',
+    reason: '교실 뒤에 앉은 학생도 알림을 읽을 수 있게 Pretendard를 적용하고 본문을 15px에서 20px로 키웠어요.',
   },
   {
     title: '휴대폰에서도 본문 끝까지',
