@@ -55,28 +55,31 @@ function noticeMeta(notice) {
 }
 
 function listing(notice) {
-  const article = element("article", notice.pinned ? "notice pinned" : "notice");
-  const button = element("button");
+  const item = element("li");
+  const button = element("button", "notice-row");
   button.type = "button";
-  const info = element("span");
+  const info = element("span", "notice-info");
+  const summary = element("span", "notice-summary");
   const title = element("span", "notice-title", notice.title);
-  info.append(noticeMeta(notice), title, element("span", "notice-preview", notice.body));
-  const side = element("span", "notice-side");
+  summary.append(title, noticeMeta(notice));
+  info.append(summary, element("span", "notice-preview", notice.body));
   const chevron = element("i", "icon icon-chevron");
   chevron.setAttribute("aria-hidden", "true");
-  side.append(noticeDate(notice), chevron);
-  button.append(info, side);
+  button.append(info, chevron);
   button.addEventListener("click", () => openNotice(notice));
-  article.append(button);
-  return article;
+  item.append(button);
+  return item;
 }
 
-function noticeGroup(title, notices) {
+function noticeGroup(date, notices, isToday) {
   const group = element("div", "notice-group");
-  const list = element("div", "notice-list");
+  const heading = element("h3", "notice-group-title", isToday ? "오늘 · " + date : date);
+  if (isToday) heading.classList.add("today");
+  const list = element("ul", "notice-list");
+  list.setAttribute("role", "list");
+  notices.sort((a, b) => Number(b.pinned) - Number(a.pinned));
   list.append(...notices.map(listing));
-  if (title) group.append(element("h3", "notice-group-title", title));
-  group.append(list);
+  group.append(heading, list);
   return group;
 }
 
@@ -89,8 +92,6 @@ function renderBoard() {
     return categoryMatches && text.normalize().toLocaleLowerCase("ko").includes(query);
   });
 
-  matching.sort((a, b) => Number(b.pinned) - Number(a.pinned) ||
-    Date.parse(b.created_at) - Date.parse(a.created_at) || b.id.localeCompare(a.id));
   count.textContent = matching.length + "개의 알림";
 
   if (!matching.length) {
@@ -99,17 +100,21 @@ function renderBoard() {
     return;
   }
 
-  const today = dateFormat.format(new Date());
-  const todaysNotices = [];
-  const olderNotices = [];
+  matching.sort((a, b) => Date.parse(b.created_at) - Date.parse(a.created_at) || b.id.localeCompare(a.id));
+  const byDate = new Map();
   for (const notice of matching) {
-    const group = dateFormat.format(new Date(notice.created_at)) === today ? todaysNotices : olderNotices;
-    group.push(notice);
+    const date = dateFormat.format(new Date(notice.created_at));
+    if (!byDate.has(date)) byDate.set(date, []);
+    byDate.get(date).push(notice);
   }
 
+  const today = dateFormat.format(new Date());
   const groups = [];
-  if (todaysNotices.length) groups.push(noticeGroup("오늘 알림", todaysNotices));
-  if (olderNotices.length) groups.push(noticeGroup(todaysNotices.length ? "이전 알림" : null, olderNotices));
+  if (byDate.has(today)) {
+    groups.push(noticeGroup(today, byDate.get(today), true));
+    byDate.delete(today);
+  }
+  for (const [date, notices] of byDate) groups.push(noticeGroup(date, notices, false));
   board.replaceChildren(...groups);
 }
 
