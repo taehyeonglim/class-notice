@@ -95,7 +95,10 @@ function renderBoard() {
   count.textContent = matching.length + "개의 알림";
 
   if (!matching.length) {
-    const emptyText = query ? "검색 결과가 없습니다." : "등록된 알림이 없습니다.";
+    let emptyText = "아직 등록된 알림이 없습니다. 새 알림이 올라오면 여기에 표시됩니다.";
+    if (notices.length) {
+      emptyText = query ? "검색 결과가 없습니다." : "이 분류에 등록된 알림이 없습니다.";
+    }
     board.replaceChildren(element("p", "empty", emptyText));
     return;
   }
@@ -281,7 +284,14 @@ editorForm.addEventListener("submit", (event) => {
   };
   perform(editorDialog, byId("editor-submit"), byId("editor-error"), async () => {
     if (!values.title || !values.body) throw new Error("제목과 내용을 입력해 주세요.");
-    const saved = await saveNotice(values, editingId);
+    let saved;
+    try {
+      saved = await saveNotice(values, editingId);
+    } catch (error) {
+      const detail = error?.name === "Error" ? error.message : "알림을 저장하지 못했습니다.";
+      const retry = isTeacher() ? "다시 저장해 주세요." : "로그인 후 저장을 다시 시도해 주세요.";
+      throw new Error(detail + " " + retry, { cause: error });
+    }
     editorDialog.close();
     if (!editingId) {
       search.value = "";
