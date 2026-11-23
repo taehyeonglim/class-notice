@@ -2,7 +2,7 @@ export const demoKey = "class-notice-demo";
 
 const examples = [
   {
-    id: "school-festival", category: "notice", pinned: true, daysAgo: 1,
+    id: "school-festival", category: "notice", pinned: true, daysAgo: 0,
     title: "학예회 참여 안내",
     body: "다음 주 금요일에 학예회를 엽니다. 학생들은 발표 순서와 준비물을 미리 확인해 주세요. 학부모님은 오전 10시부터 강당에 입장하실 수 있습니다.",
   },

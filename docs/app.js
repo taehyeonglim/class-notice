@@ -71,6 +71,15 @@ function listing(notice) {
   return article;
 }
 
+function noticeGroup(title, notices) {
+  const group = element("div", "notice-group");
+  const list = element("div", "notice-list");
+  list.append(...notices.map(listing));
+  if (title) group.append(element("h3", "notice-group-title", title));
+  group.append(list);
+  return group;
+}
+
 function renderBoard() {
   if (!loaded || loadFailed) return;
   const query = search.value.trim().normalize().toLocaleLowerCase("ko");
@@ -83,8 +92,25 @@ function renderBoard() {
   matching.sort((a, b) => Number(b.pinned) - Number(a.pinned) ||
     Date.parse(b.created_at) - Date.parse(a.created_at) || b.id.localeCompare(a.id));
   count.textContent = matching.length + "개의 알림";
-  const emptyText = query ? "검색 결과가 없습니다." : "등록된 알림이 없습니다.";
-  board.replaceChildren(...(matching.length ? matching.map(listing) : [element("p", "empty", emptyText)]));
+
+  if (!matching.length) {
+    const emptyText = query ? "검색 결과가 없습니다." : "등록된 알림이 없습니다.";
+    board.replaceChildren(element("p", "empty", emptyText));
+    return;
+  }
+
+  const today = dateFormat.format(new Date());
+  const todaysNotices = [];
+  const olderNotices = [];
+  for (const notice of matching) {
+    const group = dateFormat.format(new Date(notice.created_at)) === today ? todaysNotices : olderNotices;
+    group.push(notice);
+  }
+
+  const groups = [];
+  if (todaysNotices.length) groups.push(noticeGroup("오늘 알림", todaysNotices));
+  if (olderNotices.length) groups.push(noticeGroup(todaysNotices.length ? "이전 알림" : null, olderNotices));
+  board.replaceChildren(...groups);
 }
 
 async function loadBoard() {

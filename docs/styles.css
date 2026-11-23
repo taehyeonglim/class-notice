@@ -27,10 +27,12 @@ h1, h2, h3, p { margin: 0; }
 .frame { width: min(100% - 48px, 1024px); margin-inline: auto; }
 .topbar { background: var(--input); border-bottom: 1px solid var(--line); }
 .topbar-inner, .teacher-actions, .brand, .button { display: flex; align-items: center; }
-.topbar-inner { justify-content: space-between; gap: 12px; min-height: 72px; }
+.topbar-inner { justify-content: space-between; gap: 12px; min-height: 60px; }
 .teacher-actions { gap: 8px; }
-.brand { gap: 11px; color: var(--ink); text-decoration: none; font-weight: 800; letter-spacing: -.035em; }
-.brand-mark { display: grid; place-items: center; width: 36px; height: 36px; border-radius: 11px; background: var(--accent); color: var(--background); }
+.brand { flex-wrap: wrap; gap: 4px 10px; }
+.brand h1 { font-size: 1rem; font-weight: 800; letter-spacing: -.035em; }
+.brand a { color: var(--ink); text-decoration: none; }
+#class-name { color: var(--muted); font-size: .8125rem; }
 .button { justify-content: center; gap: 8px; min-height: 42px; padding: 9px 14px; border-radius: 10px; border: 1px solid transparent; font-size: .875rem; font-weight: 700; white-space: nowrap; }
 .outline { color: var(--ink); background: var(--surface); border-color: var(--line); }
 .outline:hover { background: var(--raised); }
@@ -39,50 +41,20 @@ h1, h2, h3, p { margin: 0; }
 .danger { color: var(--accent); background: var(--input); border-color: var(--accent); }
 .danger:hover { background: var(--raised); }
 
-.hero {
-  display: flex;
-  align-items: center;
-  position: relative;
-  isolation: isolate;
-  overflow: hidden;
-  min-height: 246px;
-  margin-top: 38px;
-  padding: 35px 46px;
-  border-radius: 24px;
-  background: var(--surface);
-}
-.hero-copy { position: relative; z-index: 1; }
-.class-label { display: inline-block; padding: 6px 13px; border: 1px solid var(--line); border-radius: 99px; background: var(--input); color: var(--accent); font-size: .875rem; font-weight: 800; }
-.hero h1 { margin-top: 11px; font-size: clamp(2.25rem, 5vw, 3.5rem); line-height: 1.18; letter-spacing: -.075em; }
-.hero p { margin-top: 12px; color: var(--muted); line-height: 1.65; word-break: keep-all; }
-.hero-art { position: absolute; right: 55px; top: 22px; width: 263px; height: 207px; }
-.hero-art::before, .hero-art::after { content: ""; position: absolute; border: 1px solid var(--line); border-radius: 50%; inset: 18px 31px 0; transform: rotate(-15deg) scaleY(.76); }
-.hero-art::after { inset: 5px 14px -12px; }
-.notebook { z-index: 1; position: absolute; inset: 24px 68px 19px 65px; transform: rotate(-13deg); border-radius: 11px 14px 14px 11px; background: var(--raised); border-left: 12px solid var(--input); border-bottom: 10px solid var(--line); box-shadow: 4px 5px 0 var(--background); }
-.notebook-label { display: grid; gap: 6px; align-content: center; width: 64px; height: 53px; background: var(--input); padding: 0 11px; border-radius: 6px; margin: 33px auto; }
-.notebook-label b, .notebook-label i { display: block; height: 3px; border-radius: 4px; background: var(--line); }
-.notebook-label b { width: 24px; background: var(--accent); }
-.notebook-label i:last-child { width: 31px; }
-.rings { position: absolute; top: 15px; left: -19px; width: 19px; height: 6px; border-radius: 5px; background: var(--muted); color: var(--muted); box-shadow: 0 25px, 0 50px, 0 75px, 0 100px; }
-.pencil { z-index: 2; position: absolute; top: 79px; right: 50px; width: 14px; height: 103px; background: var(--accent); border-radius: 4px 4px 0 0; transform: rotate(25deg); box-shadow: 3px 3px 6px var(--background); }
-.pencil::before { content: ""; position: absolute; inset: -8px 0 auto; height: 13px; background: var(--line); border-bottom: 3px solid var(--muted); border-radius: 5px 5px 0 0; }
-.pencil::after { content: ""; position: absolute; top: 100%; border-inline: 7px solid transparent; border-top: 16px solid var(--muted); }
-.spark { position: absolute; color: var(--line); }
-.spark.one { top: 13px; right: 37px; font-size: 28px; }
-.spark.two { bottom: 27px; left: 30px; font-size: 18px; }
-.spark.three { top: 41px; left: 18px; font-size: 20px; color: var(--accent); }
-
-.board { margin-top: 37px; }
+.board { margin-top: 20px; }
 .board-heading { display: flex; align-items: end; justify-content: space-between; gap: 16px; }
 .board-heading h2 { font-size: 1.6rem; letter-spacing: -.05em; }
 #count { margin-top: 5px; color: var(--muted); font-size: .875rem; }
 .search { display: flex; align-items: center; gap: 11px; width: 247px; padding: 0 13px; border: 1px solid var(--line); border-radius: 11px; background: var(--input); color: var(--muted); }
 .search:focus-within { outline: 2px solid var(--accent); outline-offset: 2px; }
 .search input { background: transparent; border: 0; padding: 11px 0; width: 100%; outline: 0; font-size: .875rem; color: var(--ink); }
-.filters { display: flex; flex-wrap: wrap; gap: 8px; margin: 20px 0 16px; }
+.filters { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0 16px; }
 .filters button { background: var(--surface); color: var(--muted); border: 1px solid var(--line); border-radius: 99px; min-height: 38px; padding: 7px 16px; font-size: .875rem; font-weight: 700; }
 .filters button:hover { border-color: var(--accent); }
 .filters [aria-pressed="true"] { color: var(--background); background: var(--accent); border-color: var(--accent); }
+.notice-group + .notice-group { margin-top: 20px; }
+.notice-group-title { margin-bottom: 8px; color: var(--muted); font-size: 1rem; }
+.notice-group:first-child .notice-group-title { color: var(--accent); }
 .notice-list { display: grid; gap: 11px; }
 .notice { min-width: 0; }
 .notice button { display: grid; grid-template-columns: 1fr auto; align-items: center; text-align: left; gap: 18px; color: inherit; padding: 17px 20px; width: 100%; border: 1px solid var(--line); border-radius: 15px; background: var(--surface); }
@@ -121,8 +93,6 @@ dialog p { color: var(--muted); line-height: 1.6; }
 .error { color: var(--accent); margin-top: 10px; }
 .toast { position: fixed; z-index: 3; bottom: 20px; left: 50%; transform: translateX(-50%); max-width: calc(100% - 36px); border-radius: 10px; padding: 12px 17px; background: var(--raised); color: var(--ink); border: 1px solid var(--line); }
 .icon { display: inline-block; position: relative; flex: none; }
-.icon-book { width: 16px; height: 18px; border: 2px solid currentColor; border-radius: 3px; }
-.icon-book::before { content: ""; position: absolute; top: 0; bottom: 0; left: 3px; border-left: 1px solid currentColor; }
 .icon-lock { width: 13px; height: 10px; border: 1.5px solid currentColor; border-radius: 3px; margin-top: 4px; }
 .icon-lock::before { content: ""; position: absolute; width: 6px; height: 6px; border: 1.5px solid currentColor; border-bottom: 0; border-radius: 5px 5px 0 0; left: 50%; bottom: 100%; transform: translateX(-50%); }
 .icon-search { width: 13px; height: 13px; border: 1.6px solid currentColor; border-radius: 50%; }
@@ -131,28 +101,17 @@ dialog p { color: var(--muted); line-height: 1.6; }
 
 @media (min-width: 1200px) {
   .frame { width: min(100% - 64px, 1184px); }
-  .hero p, .notice-preview, #notice-body { font-size: 1.125rem; }
+  .notice-preview, #notice-body { font-size: 1.125rem; }
   .board-heading h2, #notice-title { font-size: 2rem; }
   .notice-title { font-size: 1.375rem; }
   .notice-side, #count, .filters button { font-size: 1rem; }
 }
 
-@media (max-width: 700px) {
-  .hero { min-height: 210px; margin-top: 24px; padding: 26px; }
-  .hero-art { right: 4px; top: 8px; transform: scale(.77); transform-origin: right center; }
-  .hero p { max-width: 235px; }
-}
 @media (max-width: 500px) {
   .frame { width: calc(100% - 32px); }
-  .topbar-inner { min-height: 64px; }
-  .brand { gap: 6px; font-size: .875rem; }
-  .brand-mark { width: 29px; height: 29px; border-radius: 8px; }
+  .brand h1 { font-size: .875rem; }
   .teacher-actions .button { padding-inline: 8px; }
-  .hero { min-height: 173px; padding: 20px; }
-  .hero h1 { font-size: 2rem; }
-  .hero p { max-width: 175px; font-size: .875rem; }
-  .hero-art { right: -10px; top: -14px; transform: scale(.48); }
-  .board { margin-top: 26px; }
+  .board { margin-top: 16px; }
   .board-heading { align-items: stretch; flex-direction: column; gap: 12px; }
   .search { width: 100%; }
   .filters { gap: 6px; margin: 14px 0; }
@@ -162,5 +121,4 @@ dialog p { color: var(--muted); line-height: 1.6; }
 }
 @media (max-width: 360px) {
   .topbar-inner { flex-wrap: wrap; padding-block: 8px; }
-  .hero-art { right: -19px; transform: scale(.39); }
 }
