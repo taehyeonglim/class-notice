@@ -1,0 +1,16 @@
+{
+  "name": "class-notice-trailer",
+  "private": true,
+  "scripts": {
+    "studio": "remotion studio src/index.jsx",
+    "render": "remotion render src/index.jsx ClassNoticeTrailer class-notice-trailer.mp4 --codec=h264",
+    "render:making-of": "remotion render src/index.jsx ClassNoticeMakingOf class-notice-making-of.mp4 --codec=h264"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.544",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "remotion": "4.0.544",
+    "pretendard": "1.3.9"
+  }
+}
